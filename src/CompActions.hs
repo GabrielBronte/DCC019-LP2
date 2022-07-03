@@ -1,8 +1,4 @@
-module CompActions
-    ( getRandomCode
-    , getFeedback
-    , correctGuess
-    ) where
+module CompActions (getRandomCode, getFeedback, correctGuess) where
 import Types
 import System.Random (randomRIO)
 import Control.Applicative ((<$>))
@@ -27,22 +23,21 @@ getRandomCode :: Int -> IO Code
 
 getRandomCode len = Code <$> mapM (const getRandomCodePeg) [1..len]
 
--- | Compares a guess to the secret code and returns the feedback encoded with black and white key pegs.
+-- | Compara um palpite com o código secreto e retorna o feedback codificado com pinos de chave completo e parcial.
 getFeedback :: Code -> Guess -> Feedback
 getFeedback (Code c) (Guess g) =
-    -- The order of the key pegs doesn't matter so we first give the black pegs and then the white pegs.
+    -- A ordem dos pinos das teclas não importa, então primeiro damos os pinos completos e depois os pinos parciais.
     Feedback $ replicate numCorrectPlace Completo ++ replicate numCorrectColourButNotPlace Parcial
     where
-        -- The number of code pegs that match in colour and position: straigtforward zipping with equality
+        -- O número de pinos de código que correspondem em cor e posição: compactação direta com igualdade
         numCorrectPlace = length . filter id $ zipWith (==) c g
-        -- The number of code pegs that match in colour: we remove the duplicate colours from the
-        --     code and guess and return the length of their intersection.
+        -- O número de pinos de código que correspondem em cores: removemos as cores duplicadas do código, adivinhamos e retornamos o comprimento de sua interseção.
         numCorrectColour = length $ intersect (nub c) (nub g)
-        -- The number of pegs that match in colour but have the wrong position: in case of duplicates
-        --     the there can be more place matches than colour matches so we truncate the subtraction to 0
+        -- O número de pinos que combinam em cores, mas têm a posição errada: em caso de duplicatas, 
+        -- pode haver mais correspondências de lugar do que correspondências de cores, então truncamos a subtração para 0
         numCorrectColourButNotPlace = if diff < 0 then 0 else diff
             where diff = numCorrectColour - numCorrectPlace
 
--- | Whether the guess matches the code.
+-- | Se o palpite corresponde ao código.
 correctGuess :: Code -> Guess -> Bool
 correctGuess (Code c) (Guess g) = c == g

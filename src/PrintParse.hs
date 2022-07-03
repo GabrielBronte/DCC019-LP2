@@ -15,29 +15,29 @@ parseCodePeg "5" = Just Cinco
 parseCodePeg "6" = Just Seis
 parseCodePeg _   = Nothing
 
--- | Parses a string consisting of space-separated letters that represent the code pegs.
+-- | Analisa uma string que consiste em letras separadas por espaço que representam os pegs de código.
 parseCodeGuess :: String -> Int -> Maybe Guess
 parseCodeGuess guess codeLength
-    -- If the length of the guess is not the same as the length of the code, we cannot have a match
+    -- Se o comprimento do palpite não for o mesmo que o comprimento do código, não podemos ter uma correspondência
     | length pegStrings /= codeLength = Nothing
     -- Similar situation as with getRandomCode: mapping parseCodePeg returns [Maybe CodePeg], 
     --     but we want a Maybe [CodePeg] so we use mapM. If any of the elements is Nothing,
     --     the whole value will be Nothing, so parse errors propagate.
     --     As before, we also fmap the Guess data constructor to get a Maybe Guess.
     | otherwise = Guess <$> mapM parseCodePeg pegStrings
-        -- The words function splits a string with space-separated words into a list of words
+        -- A função words divide uma string com palavras separadas por espaço em uma lista de palavras
         where pegStrings = words guess
 
--- | Prints a prompt message and returns the user's response.
+-- | Imprime uma mensagem de prompt e retorna a resposta do usuário.
 prompt :: String -> IO String
--- If buffering is turned on, the printing happens only after you press Enter - we need to turn this off
+-- Se o buffer estiver ativado, a impressão acontecerá somente depois que você pressionar Enter - precisamos desativá-lo
 prompt message = hSetBuffering stdout NoBuffering >> putStr message >> getLine
 
--- | Prints the feedback.
+-- | Imprime o feedback.
 printFeedback :: Feedback -> IO ()
 printFeedback (Feedback f) = putStrLn $ "Feedback: " ++ concatMap ((++ "   ") . show) f
 
--- | Parses and validates the user's input for length of the code.
+-- | Analisa e valida a entrada do usuário para o comprimento do código.
 parseCodeLength :: String -> Maybe Int
 parseCodeLength len = case readMaybe len of
     Just n -> if n `elem` [2..10] then Just n else Nothing

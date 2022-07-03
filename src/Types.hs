@@ -1,20 +1,20 @@
 -- | The types used in the Mastermind game.
 module Types (CodePeg (..), KeyPeg (..), CodePegs (..), Code (..), Guess (..), Feedback (..)) where
 
--- | The colors from which the code is constructed.
+-- | Os números a partir dos quais o código é construído.
 data CodePeg = Um | Dois | Tres | Quatro | Cinco | Seis deriving (Eq, Show, Enum)
 
--- | The colors which are used to indicate the correctness of the guess.
+-- | O resultado que é usado para indicar a exatidão do palpite.
 data KeyPeg = Completo | Parcial deriving (Eq, Show)
 
--- | A sequence of code pegs.
+-- | Uma sequência de códigos de pinos.
 type CodePegs = [CodePeg]
 
--- | A code made up of a sequence of code pegs.
+-- | Um código composto por uma sequência de pinos de código.
 newtype Code = Code CodePegs deriving (Eq, Show)
 
--- | A guess of the code made up of a sequence of code pegs.
+-- | Um palpite do código composto por uma sequência de pinos de código.
 newtype Guess = Guess CodePegs deriving (Eq, Show)
 
--- | A feedback for a guess made up of some number of key pegs.
+-- | Um feedback para um palpite composto por um certo número de pinos-chave.
 newtype Feedback = Feedback [KeyPeg] deriving (Eq, Show)
