@@ -13,6 +13,7 @@ play :: IO ()
 play = do
     putStrLn "\n\nBem vindo ao CriptoGame!"
     code <- getRandomCode 4
+    putStrLn $ show code
     putStrLn $ "\nO computador gerou um código de 4 dígitos."
     putStrLn $ "Cada um destes dígitos é um valor entre 1 e 6."
     putStrLn $ "Adivinhe o código gerado no menor número de turnos possíveis.\n"

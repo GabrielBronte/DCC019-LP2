@@ -27,7 +27,7 @@ getRandomCode len = Code <$> mapM (const getRandomCodePeg) [1..len]
 getFeedback :: Code -> Guess -> Feedback
 getFeedback (Code c) (Guess g) =
     -- A ordem dos pinos das teclas não importa, então primeiro damos os pinos completos e depois os pinos parciais.
-    Feedback $ replicate numCorrectPlace Completo ++ replicate numCorrectColourButNotPlace Parcial
+    Feedback $ show numCorrectPlace ++ " Completos " ++ show numCorrectColourButNotPlace ++ " Parciais"
     where
         -- O número de pinos de código que correspondem em cor e posição: compactação direta com igualdade
         numCorrectPlace = length . filter id $ zipWith (==) c g

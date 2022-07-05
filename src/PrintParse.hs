@@ -35,7 +35,7 @@ prompt message = hSetBuffering stdout NoBuffering >> putStr message >> getLine
 
 -- | Imprime o feedback.
 printFeedback :: Feedback -> IO ()
-printFeedback (Feedback f) = putStrLn $ "Feedback: " ++ concatMap ((++ "   ") . show) f
+printFeedback (Feedback f) = putStrLn $ "Feedback: " ++ f
 
 -- | Analisa e valida a entrada do usuário para o comprimento do código.
 parseCodeLength :: String -> Maybe Int

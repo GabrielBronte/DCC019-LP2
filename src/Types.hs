@@ -17,4 +17,4 @@ newtype Code = Code CodePegs deriving (Eq, Show)
 newtype Guess = Guess CodePegs deriving (Eq, Show)
 
 -- | Um feedback para um palpite composto por um certo número de pinos-chave.
-newtype Feedback = Feedback [KeyPeg] deriving (Eq, Show)
+newtype Feedback = Feedback String deriving (Eq, Show)
