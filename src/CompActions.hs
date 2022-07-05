@@ -1,4 +1,4 @@
-module CompActions (getRandomCode, getFeedback, correctGuess) where
+module CompActions (getRandomCode, getFeedback, correctGuess, comparar) where
 import Types
 import System.Random (randomRIO)
 import Control.Applicative ((<$>))
@@ -27,7 +27,7 @@ getRandomCode len = Code <$> mapM (const getRandomCodePeg) [1..len]
 getFeedback :: Code -> Guess -> Feedback
 getFeedback (Code c) (Guess g) =
     -- A ordem dos pinos das teclas não importa, então primeiro damos os pinos completos e depois os pinos parciais.
-    Feedback $ show numCorrectPlace ++ " Completos " ++ show numCorrectColourButNotPlace ++ " Parciais"
+    Feedback $ show numCorrectPlace ++ " Completo, " ++ show numCorrectColourButNotPlace ++ " Parcial"
     where
         -- O número de pinos de código que correspondem em cor e posição: compactação direta com igualdade
         numCorrectPlace = length . filter id $ zipWith (==) c g
@@ -41,3 +41,7 @@ getFeedback (Code c) (Guess g) =
 -- | Se o palpite corresponde ao código.
 correctGuess :: Code -> Guess -> Bool
 correctGuess (Code c) (Guess g) = c == g
+
+-- Parciais = numCorrectPlace - comparar
+comparar :: [Int] -> [Int] -> Int
+comparar l l2 = length [ x | x <- l , elem x l2]
