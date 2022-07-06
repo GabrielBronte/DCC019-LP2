@@ -24,7 +24,7 @@ playGame counter code = do
             printFeedback feedback
             if (winnerCondition code guess)
             then do
-                putStrLn $ "Correto! Voce desvendou o código secreto em " ++ show counter ++ " movimentos! \n\n"
+                putStrLn $ "Parabens! Voce acertou apos " ++ show counter ++ " tentativas! \n\n"
                 exitSuccess
             else playGame (counter+1) code
         Nothing -> do
