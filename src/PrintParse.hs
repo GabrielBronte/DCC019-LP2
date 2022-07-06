@@ -6,20 +6,20 @@ import Types
 import Text.Read (readMaybe)
 import System.IO
 
-parseCodePeg :: String -> Maybe CodePeg
-parseCodePeg "1" = Just Um
-parseCodePeg "2" = Just Dois
-parseCodePeg "3" = Just Tres
-parseCodePeg "4" = Just Quatro
-parseCodePeg "5" = Just Cinco
-parseCodePeg "6" = Just Seis
-parseCodePeg _   = Nothing
+parseNumber :: String -> Maybe Number
+parseNumber "1" = Just Um
+parseNumber "2" = Just Dois
+parseNumber "3" = Just Tres
+parseNumber "4" = Just Quatro
+parseNumber "5" = Just Cinco
+parseNumber "6" = Just Seis
+parseNumber _   = Nothing
 
 -- | Analisa uma string que consiste em letras separadas por espaço que representam os códigos.
 parseCodeGuess :: String -> Maybe Guess
 parseCodeGuess guess
     | length pegStrings /= 4 = Nothing
-    | otherwise = Guess <$> mapM parseCodePeg pegStrings
+    | otherwise = Guess <$> mapM parseNumber pegStrings
         where pegStrings = words guess
 
 -- | Imprime uma mensagem de prompt e retorna a resposta do usuário.

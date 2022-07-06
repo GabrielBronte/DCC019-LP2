@@ -8,7 +8,7 @@ import Control.Applicative ((<$>))
 import Data.List
 
 -- | Retorna um código aleatório.
-getRandomCode :: IO CodePeg
+getRandomCode :: IO Number
 getRandomCode =
     let allCodes = [Um ..]
     in do
