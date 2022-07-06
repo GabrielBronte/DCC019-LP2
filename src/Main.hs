@@ -5,7 +5,6 @@ module Main where
 import Types
 import CompActions
 import PrintParse
-import Control.Monad (forever, when)
 import System.Exit (exitSuccess)
 
 main :: IO ()
