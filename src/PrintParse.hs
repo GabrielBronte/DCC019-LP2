@@ -13,9 +13,9 @@ parseCodePeg "6" = Just Seis
 parseCodePeg _   = Nothing
 
 -- | Analisa uma string que consiste em letras separadas por espaço que representam os códigos.
-parseCodeGuess :: String -> Int -> Maybe Guess
-parseCodeGuess guess codeLength
-    | length pegStrings /= codeLength = Nothing
+parseCodeGuess :: String -> Maybe Guess
+parseCodeGuess guess
+    | length pegStrings /= 4 = Nothing
     | otherwise = Guess <$> mapM parseCodePeg pegStrings
         where pegStrings = words guess
 

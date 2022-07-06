@@ -18,7 +18,7 @@ main = do
 playGame :: Int -> Code -> IO ()
 playGame counter code = do
     guessString <- prompt "? "
-    case parseCodeGuess guessString 4 of
+    case parseCodeGuess guessString of
         Just guess -> do
             let feedback = getFeedback code guess
             printFeedback feedback
