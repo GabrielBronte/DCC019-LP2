@@ -40,10 +40,10 @@ calcGame (hh:ht) (gh:gt)
     | otherwise = ( c, hh:hl, gh:gl )
     where ( c, hl, gl ) = calcGame ht gt
 
-select_fst ::Eq a => (Int, [a], [a]) -> Int
+select_fst :: (Int, [a], [a]) -> Int
 select_fst(x, _, _) = x
 
-select_snd ::Eq a => (Int, [a], [a]) -> [a]
+select_snd :: (Int, [a], [a]) -> [a]
 select_snd(_, y, _) = y
 
 select_trd :: (Int, [a], [a]) -> [a]
