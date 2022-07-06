@@ -1,3 +1,6 @@
+-- Gabriel Bronte Cardoso - 201835002
+-- Daniel Machado Barbosa Delgado - 201835013
+
 module CompActions (getRandomCodes, getFeedback, winnerCondition, calcGame, select_fst, select_snd, select_trd) where
 import Types
 import System.Random (randomRIO)

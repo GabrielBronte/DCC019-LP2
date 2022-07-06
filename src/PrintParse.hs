@@ -1,3 +1,6 @@
+-- Gabriel Bronte Cardoso - 201835002
+-- Daniel Machado Barbosa Delgado - 201835013
+
 module PrintParse (parseCodeGuess, prompt, printFeedback, parseCodeLength) where
 import Types
 import Text.Read (readMaybe)

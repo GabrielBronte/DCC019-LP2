@@ -1,3 +1,6 @@
+-- Gabriel Bronte Cardoso - 201835002
+-- Daniel Machado Barbosa Delgado - 201835013
+
 module Main where
 import Types
 import CompActions
@@ -12,7 +15,6 @@ main = do
     putStrLn $ "Cada um destes dígitos é um valor entre 1 e 6."
     putStrLn $ "Adivinhe o código gerado no menor número de turnos possíveis.\n"
     code <- getRandomCodes
-    putStrLn $ show code
     playGame 1 code
 
 playGame :: Int -> Code -> IO ()
@@ -24,7 +26,7 @@ playGame counter code = do
             printFeedback feedback
             if (winnerCondition code guess)
             then do
-                putStrLn $ "Parabens! Voce acertou apos " ++ show counter ++ " tentativas! \n\n"
+                putStrLn $ "Parabéns, você acertou após " ++ show counter ++ " tentativas. \n\n"
                 exitSuccess
             else playGame (counter+1) code
         Nothing -> do

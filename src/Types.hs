@@ -1,3 +1,6 @@
+-- Gabriel Bronte Cardoso - 201835002
+-- Daniel Machado Barbosa Delgado - 201835013
+
 module Types (CodePeg (..), CodePegs (..), Code (..), Guess (..), Feedback (..)) where
 
 -- | Os números a partir dos quais o código é construído.
