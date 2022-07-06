@@ -32,7 +32,7 @@ getFeedback (Code c) (Guess g) =
         -- O número de pinos de código que correspondem em cor e posição: compactação direta com igualdade
         numCorrectPlace = length . filter id $ zipWith (==) c g
         -- O número de pinos de código que correspondem em cores: removemos as cores duplicadas do código, adivinhamos e retornamos o comprimento de sua interseção.
-        numCorrectColour = length $ intersect (nub c) (nub g)
+        numCorrectColour = length $ intersect (c) (g)
         -- O número de pinos que combinam em cores, mas têm a posição errada: em caso de duplicatas, 
         -- pode haver mais correspondências de lugar do que correspondências de cores, então truncamos a subtração para 0
         numCorrectColourButNotPlace = if diff < 0 then 0 else diff
@@ -41,7 +41,3 @@ getFeedback (Code c) (Guess g) =
 -- | Se o palpite corresponde ao código.
 correctGuess :: Code -> Guess -> Bool
 correctGuess (Code c) (Guess g) = c == g
-
--- Parciais = numCorrectPlace - comparar
-comparar :: [Int] -> [Int] -> Int
-comparar l l2 = length [ x | x <- l , elem x l2]
