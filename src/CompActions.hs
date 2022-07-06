@@ -1,8 +1,14 @@
-module CompActions (getRandomCode, getFeedback, correctGuess, comparar) where
+module CompActions (getRandomCode, getFeedback, correctGuess, removeFromList, guessesExact) where
 import Types
 import System.Random (randomRIO)
 import Control.Applicative ((<$>))
-import Data.List (intersect, nub)
+import Data.List
+
+removeFromList :: Eq a => [a] -> [a] -> [a]
+removeFromList _ [] = []
+removeFromList (y:ys) (x:xs)
+                  | y == x = removeFromList [y] xs
+                  | otherwise = x : removeFromList [y] xs
 
 -- | Retorna um pino de código aleatório.
 getRandomCodePeg :: IO CodePeg
@@ -27,12 +33,14 @@ getRandomCode len = Code <$> mapM (const getRandomCodePeg) [1..len]
 getFeedback :: Code -> Guess -> Feedback
 getFeedback (Code c) (Guess g) =
     -- A ordem dos pinos das teclas não importa, então primeiro damos os pinos completos e depois os pinos parciais.
-    Feedback $ show numCorrectPlace ++ " Completo, " ++ show numCorrectColourButNotPlace ++ " Parcial"
+    Feedback $ show numCorrectPlace ++ " Completo, " ++ show numCorrectColour ++ " Parcial "
     where
         -- O número de pinos de código que correspondem em cor e posição: compactação direta com igualdade
-        numCorrectPlace = length . filter id $ zipWith (==) c g
+        numCorrectPlace = length . filter id $ zipWith (==) c g 
+
+        x = guessesExact c g
         -- O número de pinos de código que correspondem em cores: removemos as cores duplicadas do código, adivinhamos e retornamos o comprimento de sua interseção.
-        numCorrectColour = length $ intersect (c) (g)
+        numCorrectColour = length $ intersect (fst x) (snd x)
         -- O número de pinos que combinam em cores, mas têm a posição errada: em caso de duplicatas, 
         -- pode haver mais correspondências de lugar do que correspondências de cores, então truncamos a subtração para 0
         numCorrectColourButNotPlace = if diff < 0 then 0 else diff
@@ -41,3 +49,18 @@ getFeedback (Code c) (Guess g) =
 -- | Se o palpite corresponde ao código.
 correctGuess :: Code -> Guess -> Bool
 correctGuess (Code c) (Guess g) = c == g
+
+
+guessesExact :: Eq a => [a] -> [a] -> ([a], [a])
+guessesExact [] [] = ( [], [] )
+guessesExact (hh:ht) (gh:gt)
+    | hh == gh = ( hl
+                    , gl
+                    )
+    | otherwise = ( hh:hl
+                    , gh:gl
+                    )
+    where ( hl, gl) = guessesExact ht gt
+
+
+
