@@ -1,11 +1,7 @@
--- | The types used in the Mastermind game.
-module Types (CodePeg (..), KeyPeg (..), CodePegs (..), Code (..), Guess (..), Feedback (..)) where
+module Types (CodePeg (..), CodePegs (..), Code (..), Guess (..), Feedback (..)) where
 
 -- | Os números a partir dos quais o código é construído.
 data CodePeg = Um | Dois | Tres | Quatro | Cinco | Seis deriving (Eq, Show, Enum)
-
--- | O resultado que é usado para indicar a exatidão do palpite.
-data KeyPeg = Completo | Parcial deriving (Eq, Show)
 
 -- | Uma sequência de códigos de pinos.
 type CodePegs = [CodePeg]

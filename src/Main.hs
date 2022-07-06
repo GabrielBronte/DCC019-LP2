@@ -7,12 +7,12 @@ import System.Exit (exitSuccess)
 
 main :: IO ()
 main = do
-    play
+    playGame 0
 
-play :: IO ()
-play = do
+playGame :: Int -> IO ()
+playGame counter = do
     putStrLn "\n\nBem vindo ao CriptoGame!"
-    code <- getRandomCode 4
+    code <- getRandomCodes
     putStrLn $ show code
     putStrLn $ "\nO computador gerou um código de 4 dígitos."
     putStrLn $ "Cada um destes dígitos é um valor entre 1 e 6."
@@ -21,10 +21,11 @@ play = do
         guessString <- prompt "? "
         case parseCodeGuess guessString 4 of
             Just guess -> do
+                let counter = (counter+1)
                 let feedback = getFeedback code guess
                 printFeedback feedback
-                when (correctGuess code guess) $ do
-                    putStrLn "Correto! Bem feito!"
+                when (winnerCondition code guess) $ do
+                    putStrLn $ "Correto! Voce desvendou o código secreto em " ++ show counter ++ " movimentos!"
                     exitSuccess
             Nothing -> do
                 putStrLn "Não foi possível reconhecer sua entrada, tente novamente."
