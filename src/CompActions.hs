@@ -7,7 +7,6 @@ import System.Random (randomRIO)
 import Control.Applicative ((<$>))
 import Data.List
 
--- | Retorna um código aleatório.
 getRandomCode :: IO Number
 getRandomCode =
     let allCodes = [Um ..]
@@ -15,11 +14,9 @@ getRandomCode =
         randomIndex <- randomRIO (0, length allCodes - 1)
         return $ allCodes !! randomIndex
 
--- | Retorna um código aleatório do comprimento especificado.
 getRandomCodes :: IO Code
 getRandomCodes = Code <$> mapM (const getRandomCode) [1..4]
 
--- | Compara um palpite com o código secreto e retorna o feedback com quantidade de códigos completos e parciais.
 getFeedback :: Code -> Guess -> Feedback
 getFeedback (Code c) (Guess g) =
     Feedback $ show numCorrectPlace ++ " Completo, " ++ show numCorrectCodeButNotPlace ++ " Parcial "
@@ -28,11 +25,9 @@ getFeedback (Code c) (Guess g) =
         numCorrectPlace = select_fst (feedback) 
         numCorrectCodeButNotPlace = length $ intersect (select_snd (feedback) ) (select_trd (feedback) )
 
--- | Se o palpite corresponde ao código.
 winnerCondition :: Code -> Guess -> Bool
 winnerCondition (Code c) (Guess g) = c == g
 
--- | Retorna quantidade de codigos completos e os removem do palpite e do segredo
 calcGame :: Eq a => [a] -> [a] -> (Int, [a], [a])
 calcGame [] [] = ( 0, [], [] )
 calcGame (hh:ht) (gh:gt)
